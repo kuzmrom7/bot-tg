@@ -31,8 +31,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-
-
 	updates := bot.ListenForWebhook("/")
 	go http.ListenAndServe(":"+port, nil)
 
@@ -40,11 +38,9 @@ func main() {
 		var msg tgbotapi.MessageConfig
 		log.Println("recived text: ", update.Message.Text)
 
-		switch update.Message.Text {
-		case "Hello":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Hi, how can i help you?")
-		default:
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool"+update.Message.Text)
+		msg, err = HandlerMessage(update.Message.Text, update.Message.Chat.ID)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 		msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
