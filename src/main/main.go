@@ -11,7 +11,10 @@ var buttons = []tgbotapi.KeyboardButton{
 	tgbotapi.KeyboardButton{Text: "Hello"},
 }
 
+var drizzle = "\xF0\x9F\x98\x81"
+
 const WebHookURL = "https://bot-kuzmen.herokuapp.com/"
+
 
 func main() {
 	port := os.Getenv("PORT")
@@ -39,10 +42,10 @@ func main() {
 		log.Println("recived text: ", update.Message.Text)
 
 		switch update.Message.Text {
-		case "Hello":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Hi, how can i help you?")
+		case "/start":
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь?")
 		default:
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool"+update.Message.Text)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool"+update.Message.Text+drizzle)
 		}
 
 		msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
