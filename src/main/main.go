@@ -11,7 +11,7 @@ var buttons = []tgbotapi.KeyboardButton{
 	tgbotapi.KeyboardButton{Text: "Hello"},
 }
 
-const WebHookURL = "https://kuzmen-bot.herokuapp.com/"
+const WebHookURL = "https://bot-kuzmen.herokuapp.com/"
 
 func main() {
 	port := os.Getenv("PORT")
