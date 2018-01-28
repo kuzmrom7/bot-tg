@@ -50,7 +50,7 @@ func main() {
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь? "+train)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
 		default:
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool"+update.Message.Text+help)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool "+update.Message.Text+help)
 		}
 
 
