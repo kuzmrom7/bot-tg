@@ -39,7 +39,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		}
 		if (update.Message.MessageID-2 == dateID) {
 			store.AddDate(update.Message.Chat.ID, update.Message.Text)
-
+			update.Message.Text = "Nice"
 		}
 
 		switch update.Message.Text {
@@ -62,6 +62,10 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		case "Дата" + Date:
 			dateID = update.Message.MessageID
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Когда едешь? "+Date)
+
+		case "Nice":
+			dateID = update.Message.MessageID
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Все супер! "+Done)
 
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Выберите действие: ")

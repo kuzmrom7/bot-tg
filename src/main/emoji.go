@@ -6,4 +6,5 @@ var (
 	TrainFrom = "\xF0\x9F\x9A\x84"
 	TraintTo  = "\xF0\x9F\x9A\x85"
 	Date      = "\xF0\x9F\x93\x85"
+	Done      = "\xE2\x9C\x85"
 )
