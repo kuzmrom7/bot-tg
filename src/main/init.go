@@ -15,7 +15,7 @@ type TelegramBot struct {
 
 func (telegramBot *TelegramBot) Init() {
 	//port := os.Getenv("PORT")
-	botAPI, err := tgbotapi.NewBotAPI("475819101:AAFuuJ51XbSkj3vd91U0aUHh2Gnk_CpwUhA")
+	botAPI, err := tgbotapi.NewBotAPI("475819101:AAFM9pzueH6sEXrTujffOe1QoidwXA_-jiU")
 	telegramBot.API = botAPI
 
 	telegramBot.API.Debug = true
