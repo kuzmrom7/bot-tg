@@ -1,10 +1,8 @@
 package main
 
 import (
-	"os"
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
-	"net/http"
 )
 
 var buttons = []tgbotapi.KeyboardButton{
@@ -14,14 +12,13 @@ var buttons = []tgbotapi.KeyboardButton{
 
 var (
 	train = "\xF0\x9F\x9A\x83"
-	help = "\xF0\x9F\x99\x8F"
+	help  = "\xF0\x9F\x99\x8F"
 )
 
 const WebHookURL = "https://bot-kuzmen.herokuapp.com/"
 
-
 func main() {
-	port := os.Getenv("PORT")
+	//port := os.Getenv("PORT")
 	bot, err := tgbotapi.NewBotAPI("475819101:AAFuuJ51XbSkj3vd91U0aUHh2Gnk_CpwUhA")
 	if err != nil {
 		log.Fatal(err)
@@ -33,13 +30,18 @@ func main() {
 
 	//Install WebHook
 
-	_, err = bot.SetWebhook(tgbotapi.NewWebhook(WebHookURL))
-	if err != nil {
-		log.Fatal(err)
-	}
+	/*	_, err = bot.SetWebhook(tgbotapi.NewWebhook(WebHookURL))
+		if err != nil {
+			log.Fatal(err)
+		}*/
 
-	updates := bot.ListenForWebhook("/")
-	go http.ListenAndServe(":"+port, nil)
+	u := tgbotapi.NewUpdate(0)
+	u.Timeout = 60
+
+	updates, err := bot.GetUpdatesChan(u)
+
+	/*	updates := bot.ListenForWebhook("/")
+		go http.ListenAndServe(":"+port, nil)*/
 
 	for update := range updates {
 		var msg tgbotapi.MessageConfig
@@ -52,10 +54,10 @@ func main() {
 
 			keyboard := tgbotapi.InlineKeyboardMarkup{}
 
-				var row []tgbotapi.InlineKeyboardButton
-				btn := tgbotapi.NewInlineKeyboardButtonData("city","Moscow")
-				row = append(row, btn)
-				keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
+			var row []tgbotapi.InlineKeyboardButton
+			btn := tgbotapi.NewInlineKeyboardButtonData("city", "Moscow")
+			row = append(row, btn)
+			keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
 
 			msg.ReplyMarkup = keyboard
 
@@ -64,7 +66,6 @@ func main() {
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool "+update.Message.Text+help)
 		}
-
 
 		bot.Send(msg)
 	}
