@@ -18,7 +18,6 @@ func (telegramBot *TelegramBot) Init() {
 	botAPI, err := tgbotapi.NewBotAPI("475819101:AAFM9pzueH6sEXrTujffOe1QoidwXA_-jiU")
 	telegramBot.API = botAPI
 
-	telegramBot.API.Debug = true
 
 	if err != nil {
 		log.Fatal(err)
@@ -29,7 +28,7 @@ func (telegramBot *TelegramBot) Init() {
 	//Install WebHook
 
 	botUpdate := tgbotapi.NewUpdate(0) // Инициализация канала обновлений
-	botUpdate.Timeout = 40
+	botUpdate.Timeout = 10
 	telegramBot.Updates, err = telegramBot.API.GetUpdatesChan(botUpdate)
 	if err != nil {
 		log.Fatal(err)

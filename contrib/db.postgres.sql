@@ -29,7 +29,7 @@ CREATE EXTENSION "uuid-ossp";
 
 CREATE TABLE users
 (
-  id       VARCHAR(64)  DEFAULT '',
+  id       INTEGER      DEFAULT 0,
   fromFrom VARCHAR(256) DEFAULT '',
   toTo     VARCHAR(256) DEFAULT '',
   data     VARCHAR(256) DEFAULT ''
