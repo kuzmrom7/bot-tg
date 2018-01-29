@@ -48,7 +48,19 @@ func main() {
 		switch update.Message.Text {
 		case "/start":
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь? "+train)
-			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
+			/*msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)*/
+
+			keyboard := tgbotapi.InlineKeyboardMarkup{}
+
+				var row []tgbotapi.InlineKeyboardButton
+				btn := tgbotapi.NewInlineKeyboardButtonData("city","Moscow")
+				row = append(row, btn)
+				keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
+
+			msg.ReplyMarkup = keyboard
+
+		case "Москва":
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Неплохо "+train)
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool "+update.Message.Text+help)
 		}
