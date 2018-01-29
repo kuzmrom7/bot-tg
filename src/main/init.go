@@ -5,6 +5,7 @@ import (
 	"os"
 	"log"
 	"net/http"
+	"github.com/bot-tg/conf"
 )
 
 const WebHookURL = "https://bot-kuzmen.herokuapp.com/"
@@ -15,26 +16,24 @@ type TelegramBot struct {
 	ActiveContactRequests []int64                 // ID чатов, от которых мы ожидаем номер
 }
 
-
-
-func (telegramBot *TelegramBot)Init(){
+func (telegramBot *TelegramBot) Init() {
 	port := os.Getenv("PORT")
-	bot, err := tgbotapi.NewBotAPI("475819101:AAFuuJ51XbSkj3vd91U0aUHh2Gnk_CpwUhA")
-	telegramBot.API = bot
+	botAPI, err := tgbotapi.NewBotAPI(conf.APIkey)
+	telegramBot.API = botAPI
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	bot.Debug = true
-
-	log.Printf("Autorizen on account %s", bot.Self.UserName)
+	log.Printf("Autorizen on account %s", telegramBot.API.Self.UserName)
 
 	//Install WebHook
 
-	_, err = bot.SetWebhook(tgbotapi.NewWebhook(WebHookURL))
+	_, err = telegramBot.API.SetWebhook(tgbotapi.NewWebhook(WebHookURL))
 	if err != nil {
 		log.Fatal(err)
 	}
-	telegramBot.Updates = bot.ListenForWebhook("/")
+
+	telegramBot.Updates = telegramBot.API.ListenForWebhook("/")
 	go http.ListenAndServe(":"+port, nil)
 }
