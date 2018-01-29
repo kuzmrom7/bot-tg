@@ -3,15 +3,12 @@ package main
 import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
+	"github.com/bot-tg/src/store"
 )
 
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
-	classes := []string{
-		"Москва",
-		"СПб",
-	}
 
 	for update := range telegramBot.Updates {
 		var msg tgbotapi.MessageConfig
@@ -23,15 +20,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 			case "/start":
 				msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь? "+train)
 
-				keyboard := tgbotapi.InlineKeyboardMarkup{}
-				for _, class := range classes {
-					var row []tgbotapi.InlineKeyboardButton
-					btn := tgbotapi.NewInlineKeyboardButtonData(class, class)
-					row = append(row, btn)
-					keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
-				}
-
-				msg.ReplyMarkup = keyboard
+				store.CreateNote(update.Message.Chat.ID)
 
 			default:
 				msg = tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
