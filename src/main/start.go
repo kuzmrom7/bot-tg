@@ -12,6 +12,5 @@ func (telegramBot *TelegramBot) Start() {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, class+" Okey")
 			telegramBot.API.Send(msg)
 		}
-		}
 	}
 }
