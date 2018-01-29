@@ -4,8 +4,6 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"github.com/bot-tg/src/store"
-	"fmt"
-	"encoding/json"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
