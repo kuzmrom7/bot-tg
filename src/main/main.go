@@ -36,31 +36,15 @@ func main() {
 	go http.ListenAndServe(":"+port, nil)
 
 	classes := []string{
-		"Barbarian",
-		"Bard",
+		"Москва",
+		"СПб",
 		"Cleric",
-		"Druid",
-		"Fighter",
-		"Monk",
-		"Paladin",
-		"Ranger",
-		"Rogue",
-		"Sorcerer",
-		"Warlock",
-		"Wizard",
 	}
-	var classesMap map[int]string
 
 	for update := range updates {
 		var msg tgbotapi.MessageConfig
 		log.Println("recived text: ", update.Message.Text)
 
-		if update.CallbackQuery != nil {
-			class := update.CallbackQuery.Data
-			classesMap[update.CallbackQuery.From.ID] = class
-			bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID,
-				"Ok, I remember"))
-		}
 
 		switch update.Message.Text {
 
@@ -77,11 +61,14 @@ func main() {
 
 			msg.ReplyMarkup = keyboard
 
-		case "Москва":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Неплохо "+train)
-
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		}
+
+		if update.CallbackQuery != nil {
+			class := update.CallbackQuery.Data
+			bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID,
+				"Ok, I remember"+class))
 		}
 
 		bot.Send(msg)
