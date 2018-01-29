@@ -7,18 +7,12 @@ import (
 	"net/http"
 )
 
-var buttons = []tgbotapi.KeyboardButton{
-	tgbotapi.KeyboardButton{Text: "Москва"},
-	tgbotapi.KeyboardButton{Text: "Санкт-Петербург"},
-}
-
 var (
 	train = "\xF0\x9F\x9A\x83"
-	help = "\xF0\x9F\x99\x8F"
+	help  = "\xF0\x9F\x99\x8F"
 )
 
 const WebHookURL = "https://bot-kuzmen.herokuapp.com/"
-
 
 func main() {
 	port := os.Getenv("PORT")
@@ -41,29 +35,54 @@ func main() {
 	updates := bot.ListenForWebhook("/")
 	go http.ListenAndServe(":"+port, nil)
 
+	classes := []string{
+		"Barbarian",
+		"Bard",
+		"Cleric",
+		"Druid",
+		"Fighter",
+		"Monk",
+		"Paladin",
+		"Ranger",
+		"Rogue",
+		"Sorcerer",
+		"Warlock",
+		"Wizard",
+	}
+	var classesMap map[int]string
+
 	for update := range updates {
 		var msg tgbotapi.MessageConfig
 		log.Println("recived text: ", update.Message.Text)
 
-		switch update.Message.Text {
-		case "/start":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь? "+train)
-			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
-
-			keyboard := tgbotapi.InlineKeyboardMarkup{}
-
-				var row []tgbotapi.InlineKeyboardButton
-				btn := tgbotapi.NewInlineKeyboardButtonData("Mосква","Mосква")
-				row = append(row, btn)
-				keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
-
-			msg.ReplyMarkup = keyboard
-		case "Москва":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Неплохо "+train)
-		default:
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Loool "+update.Message.Text+help)
+		if update.CallbackQuery != nil {
+			class := update.CallbackQuery.Data
+			classesMap[update.CallbackQuery.From.ID] = class
+			bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID,
+				"Ok, I remember"))
 		}
 
+		switch update.Message.Text {
+
+		case "/start":
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, откуда поедешь? "+train)
+
+			keyboard := tgbotapi.InlineKeyboardMarkup{}
+			for _, class := range classes {
+				var row []tgbotapi.InlineKeyboardButton
+				btn := tgbotapi.NewInlineKeyboardButtonData(class, class)
+				row = append(row, btn)
+				keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
+			}
+
+			msg.ReplyMarkup = keyboard
+
+		case "Москва":
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Неплохо "+train)
+
+		default:
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		}
 
 		bot.Send(msg)
 	}
