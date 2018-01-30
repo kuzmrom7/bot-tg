@@ -1,0 +1,72 @@
+{
+  "result": "OK",
+  "TransferSearchMode": "SEMI_AUTO",
+  "timestamp": "30.01.2018 12:59:48.913",
+  "flFPKRoundBonus": false,
+  "tp": [
+    {
+      "state": "Trains",
+      "expressErr": false,
+      "msgList": [],
+      "from": "ОРСК",
+      "where": "МОСКВА",
+      "date": "31.01.2018",
+      "fromCode": 2041603,
+      "whereCode": 2000000,
+      "list": [
+        {
+          "date0": "31.01.2018",
+          "depth": "89",
+          "time0": "20:40",
+          "date1": "02.02.2018",
+          "time1": "09:38",
+          "route0": "ОРСК",
+          "route1": "МОСКВА КАЗ",
+          "number2": "131У",
+          "number": "131У",
+          "typeEx": "0",
+          "uid": "131UJ_1517420400000_1517553480000",
+          "bEntire": false,
+          "flMsk": "3",
+          "new": false,
+          "varPrice": true,
+          "trDate0": "31.01.2018",
+          "trTime0": "20:40",
+          "deferredPayment": false,
+          "elReg": true,
+          "train_id": "0",
+          "carrier": "ФПК",
+          "type": "0",
+          "station0": "ОРСК",
+          "timeInWay": "36:58",
+          "station1": "МОСКВА КАЗАНСКАЯ",
+          "cars": [
+            {
+              "freeSeats": "25",
+              "itype": "4",
+              "servCls": "2К",
+              "tariff": "4457",
+              "pt": "1334",
+              "typeLoc": "Купе",
+              "type": "Купе"
+            },
+            {
+              "freeSeats": "97",
+              "itype": "1",
+              "servCls": "3Л",
+              "tariff": "1577",
+              "pt": "472",
+              "typeLoc": "Плацкартный",
+              "type": "Плац"
+            }
+          ],
+          "hints": []
+        }
+      ]
+    }
+  ],
+  "discounts": {},
+  "tipFlags": {
+    "Ukr": 0
+  }
+}
