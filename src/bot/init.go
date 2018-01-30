@@ -1,4 +1,4 @@
-package main
+package bot
 
 import (
 	"gopkg.in/telegram-bot-api.v4"
@@ -15,7 +15,7 @@ type TelegramBot struct {
 
 func (telegramBot *TelegramBot) Init() {
 	//port := os.Getenv("PORT")
-	botAPI, err := tgbotapi.NewBotAPI("475819101:AAFM9pzueH6sEXrTujffOe1QoidwXA_-jiU")
+	botAPI, err := tgbotapi.NewBotAPI("475819101:AAGG-n7gS8wCQxoGbKcZ4nzk1DmQ2XTYQ48")
 	telegramBot.API = botAPI
 
 

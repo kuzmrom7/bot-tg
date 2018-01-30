@@ -1,9 +1,10 @@
-package main
+package bot
 
 import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"github.com/bot-tg/src/store"
+	"github.com/bot-tg/src/api"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
@@ -40,6 +41,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		if (update.Message.MessageID-2 == dateID) {
 			store.AddDate(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Nice"
+			api.App()
 		}
 
 		switch update.Message.Text {
