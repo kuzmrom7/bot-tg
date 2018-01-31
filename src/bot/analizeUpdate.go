@@ -4,7 +4,6 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"github.com/bot-tg/src/store"
-	"github.com/bot-tg/src/api"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
@@ -41,7 +40,6 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		if (update.Message.MessageID-2 == dateID) {
 			store.AddDate(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Nice"
-			api.App()
 		}
 
 		switch update.Message.Text {
@@ -63,11 +61,13 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 		case "Дата" + Date:
 			dateID = update.Message.MessageID
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Когда едешь? "+Date)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Когда едешь? (формат ввода `02.02.2018`)"+Date)
 
 		case "Nice":
-			dateID = update.Message.MessageID
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Все супер! "+Done)
+			msgAPI := AddData(update.Message.Chat.ID)
+
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, msgAPI)
+			msg.ParseMode = "markdown"
 
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Выберите действие: ")

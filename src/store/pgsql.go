@@ -3,7 +3,6 @@ package store
 import (
 	"log"
 	"strings"
-	"encoding/json"
 )
 
 func CheckUser(id int64) {
@@ -70,27 +69,17 @@ func AddDate(id int64, message string) {
 	_, err = result.RowsAffected()
 
 	log.Println("--store--->create date!")
-	defer PushToAPI()
 }
 
-func PushToAPI() {
-	rows, err := db.Query("SELECT * FROM users")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+func GetData(id int64) (from, to, date string) {
 
-	users := make([]*Users, 0)
+	row := db.QueryRow("SELECT * FROM users WHERE id = $1 ", id)
 
-	for rows.Next() {
-		us := new(Users)
-		err = rows.Scan(&us.Id, &us.From, &us.To, &us.Data)
-		if err != nil {
-			log.Fatal(err)
-		}
-		users = append(users, us)
-	}
+	us := new(Users)
 
-	_, _ = json.Marshal(users)
+	_ = row.Scan(&us.Id, &us.From, &us.To, &us.Data)
 
+	log.Println("--store--->get date!")
+
+	return us.From, us.To, us.Data
 }
