@@ -45,13 +45,17 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		switch update.Message.Text {
 
 		case "/start":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, нажми на кпопку,чтобы начать ? "+train)
+			messageStart := "Привет! Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!"+WinkingFace+"\n" +
+				"Пока что доступно только три города *Москва Санкт-Петербург* и *Орск*  ахах! \n Это все *ВПЕРЕД ТЕСТИТЬ* \n" +
+					"`Нажми Поехали или СТАРТ` "
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, messageStart+train)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
+			msg.ParseMode = "markdown"
 
 			store.CheckUser(update.Message.Chat.ID)
 
 		case "СТАРТ":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, нажми на кпопку,чтобы начать ? "+train)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, нажми на ПОЕХАЛИ,чтобы начать ? "+train)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
 
 			store.CheckUser(update.Message.Chat.ID)
