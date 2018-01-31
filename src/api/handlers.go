@@ -2,7 +2,6 @@ package api
 
 import (
 	"fmt"
-	"time"
 	"log"
 	"encoding/json"
 	"io/ioutil"
@@ -22,7 +21,7 @@ func getRID(url string, target interface{}) (error) {
 	defer r.Body.Close()
 
 	cooks = r.Cookies()
-	time.Sleep(1500 * time.Millisecond)
+	//time.Sleep(1500 * time.Millisecond)
 	return json.NewDecoder(r.Body).Decode(target)
 }
 

@@ -32,5 +32,5 @@ func New() {
 		log.Panic(err)
 	}
 
-	log.Printf("DB connection on %Port", Port)
+	log.Printf("DB connection on %d port ", Port)
 }

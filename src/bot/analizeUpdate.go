@@ -16,11 +16,11 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 	var buttons = []tgbotapi.KeyboardButton{
 		tgbotapi.KeyboardButton{Text: "Поехали " + TrainFrom},
-		tgbotapi.KeyboardButton{Text: "/start "},
+		tgbotapi.KeyboardButton{Text: "СТАРТ "},
 	}
 
 	var button = []tgbotapi.KeyboardButton{
-		tgbotapi.KeyboardButton{Text: "/start "},
+		tgbotapi.KeyboardButton{Text: "СТАРТ"},
 	}
 
 	for update := range telegramBot.Updates {
@@ -28,15 +28,15 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		log.Println("recived text: ", update.Message.Text)
 
 		if (update.Message.MessageID-2 == fromID) {
-
 			store.AddFrom(update.Message.Chat.ID, update.Message.Text)
-
 			update.Message.Text = "Куда " + TraintTo
 		}
+
 		if (update.Message.MessageID-2 == toID) {
 			store.AddTo(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Дата" + Date
 		}
+
 		if (update.Message.MessageID-2 == dateID) {
 			store.AddDate(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Nice"
@@ -50,14 +50,20 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 			store.CheckUser(update.Message.Chat.ID)
 
+		case "СТАРТ":
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, нажми на кпопку,чтобы начать ? "+train)
+			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
+
+			store.CheckUser(update.Message.Chat.ID)
+
 		case "Поехали " + TrainFrom:
 			fromID = update.Message.MessageID
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Откуда едешь? "+TrainFrom)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Откуда едешь? "+WinkingFace)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(button)
 
 		case "Куда " + TraintTo:
 			toID = update.Message.MessageID
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Куда едешь? "+TraintTo)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Куда едешь? "+SmirkingFAce)
 
 		case "Дата" + Date:
 			dateID = update.Message.MessageID
@@ -68,6 +74,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, msgAPI)
 			msg.ParseMode = "markdown"
+			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
 
 		default:
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Выберите действие: ")
