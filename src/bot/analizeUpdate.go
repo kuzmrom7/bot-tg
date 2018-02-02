@@ -4,7 +4,6 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"github.com/bot-tg/src/store"
-	"fmt"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
@@ -27,7 +26,6 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		toQuestions := store.ToQuestions(update.Message.Chat.ID)
 		dateQuestions := store.DateQuestions(update.Message.Chat.ID)
 
-
 		if fromQuestions {
 			store.WriteFromQuestions(update.Message.Chat.ID, false)
 			store.AddFrom(update.Message.Chat.ID, update.Message.Text)
@@ -41,9 +39,9 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		}
 
 		if dateQuestions {
-				store.WriteDateQuestions(update.Message.Chat.ID, false)
-				store.AddDate(update.Message.Chat.ID, update.Message.Text)
-				update.Message.Text = "Nice"
+			store.WriteDateQuestions(update.Message.Chat.ID, false)
+			store.AddDate(update.Message.Chat.ID, update.Message.Text)
+			update.Message.Text = "Nice"
 		}
 
 		switch update.Message.Text {

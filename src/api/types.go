@@ -23,6 +23,17 @@ type Train []struct {
 }
 
 type ListTrains []struct {
-	Time0  string `json:"time0"`
-	Number string `json:"number"`
+	Number    string `json:"number"`
+	Time0     string `json:"time0"`
+	Date0     string `json:"date0"`
+	Time1     string `json:"time1"`
+	Date1     string `json:"date1"`
+	Route0    string `json:"route0"`
+	Route1    string `json:"route1"`
+	TimeInWay string `json:"timeInWay"`
+	Cars      Cars   `json:"cars"`
+}
+
+type Cars []struct {
+
 }

@@ -12,4 +12,5 @@ var (
 	Number = "\x23\xE2\x83\xA3"
 	WinkingFace ="\xF0\x9F\x98\x89"
 	SmirkingFAce = "\xF0\x9F\x98\x8F"
+	Wavy = "\xE3\x80\xB0"
 )
