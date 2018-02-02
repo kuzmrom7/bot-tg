@@ -60,7 +60,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		switch update.Message.Text {
 
 		case "/start":
-			messageStart := "Привет!/n Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!" + WinkingFace + "\n" +
+			messageStart := "Привет!\n Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!" + WinkingFace + "\n" +
 				"Пока что доступно только три города *Москва Санкт-Петербург* и *Орск*  ахах! \n Это все *ВПЕРЕД ТЕСТИТЬ* \n" +
 				"`Нажми Поехали или СТАРТ` "
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, messageStart+train)
