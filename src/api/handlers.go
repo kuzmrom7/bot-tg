@@ -14,7 +14,7 @@ var myClient = &http.Client{}
 var cooks []*http.Cookie
 
 func getRID(url string, target interface{}) (error) {
-	log.Println("URL request", url)
+	log.Println("--API---> URL request", url)
 	r, err := myClient.Get(url)
 	if err != nil {
 		log.Println(err)
@@ -27,7 +27,7 @@ func getRID(url string, target interface{}) (error) {
 }
 
 func getTrains(url string, target interface{}) {
-	log.Println("URL request", url)
+	log.Println("--API---> URL request", url)
 
 	req, _ := http.NewRequest("GET", url, nil)
 

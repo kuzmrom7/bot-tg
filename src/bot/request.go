@@ -58,7 +58,7 @@ func AddData(id int64) (Message string) {
 
 		message = message + TraintTo + "*" + From + "\t - " + To + "\t" + Date + "*" + "\n\n" + trainsss + "\n\n"
 	}
-	log.Println("data all ready")
+	log.Println("--BOT---> data all ready")
 	return message
 }
 

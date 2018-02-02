@@ -28,7 +28,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 	for update := range telegramBot.Updates {
 		var msg tgbotapi.MessageConfig
 
-		log.Println("recived text: ", update.Message.Text)
+		log.Println("--BOT---> recived text: ", update.Message.Text)
 
 		fromQuestions := store.FromQuestions(update.Message.Chat.ID)
 		toQuestions := store.ToQuestions(update.Message.Chat.ID)

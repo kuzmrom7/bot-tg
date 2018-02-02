@@ -23,7 +23,7 @@ func (telegramBot *TelegramBot) Init() {
 		log.Fatal(err)
 	}
 
-	log.Printf("Autorizen on account %s", telegramBot.API.Self.UserName)
+	log.Printf("--BOT---> Autorizen on account %s", telegramBot.API.Self.UserName)
 
 	//Install WebHook
 
