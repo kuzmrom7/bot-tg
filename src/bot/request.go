@@ -66,7 +66,7 @@ func handleMsgTrain(number, time0, time1, date0, date1, route0, route1, timeInwa
 	var msg string
 
 	str1 := Number + " *" + number + " " + route0 + " -> " + route1 + "* \n"
-	str2 := Clock + " Отпрвление " + date0 + " " + time0 + "\n"
+	str2 := Clock + " Отпраление " + date0 + " " + time0 + "\n"
 	str3 := Clock + " Прибытие " + date1 + " " + time1 + "\n"
 	str4 := Clock + " В пути " + timeInway + "\n"
 	wavy := Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy
