@@ -4,15 +4,10 @@ import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
 	"github.com/bot-tg/src/store"
+	"fmt"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
-
-	var (
-		fromID int
-		toID   int
-		dateID int
-	)
 
 	var buttons = []tgbotapi.KeyboardButton{
 		tgbotapi.KeyboardButton{Text: "Поехали " + TrainFrom},
@@ -25,29 +20,38 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 	for update := range telegramBot.Updates {
 		var msg tgbotapi.MessageConfig
+
 		log.Println("recived text: ", update.Message.Text)
 
-		if (update.Message.MessageID-2 == fromID) {
+		fromQuestions := store.FromQuestions(update.Message.Chat.ID)
+		toQuestions := store.ToQuestions(update.Message.Chat.ID)
+		dateQuestions := store.DateQuestions(update.Message.Chat.ID)
+
+
+		if fromQuestions {
+			store.WriteFromQuestions(update.Message.Chat.ID, false)
 			store.AddFrom(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Куда " + TraintTo
 		}
 
-		if (update.Message.MessageID-2 == toID) {
+		if toQuestions {
+			store.WriteToQuestions(update.Message.Chat.ID, false)
 			store.AddTo(update.Message.Chat.ID, update.Message.Text)
 			update.Message.Text = "Дата" + Date
 		}
 
-		if (update.Message.MessageID-2 == dateID) {
-			store.AddDate(update.Message.Chat.ID, update.Message.Text)
-			update.Message.Text = "Nice"
+		if dateQuestions {
+				store.WriteDateQuestions(update.Message.Chat.ID, false)
+				store.AddDate(update.Message.Chat.ID, update.Message.Text)
+				update.Message.Text = "Nice"
 		}
 
 		switch update.Message.Text {
 
 		case "/start":
-			messageStart := "Привет! Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!"+WinkingFace+"\n" +
+			messageStart := "Привет! Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!" + WinkingFace + "\n" +
 				"Пока что доступно только три города *Москва Санкт-Петербург* и *Орск*  ахах! \n Это все *ВПЕРЕД ТЕСТИТЬ* \n" +
-					"`Нажми Поехали или СТАРТ` "
+				"`Нажми Поехали или СТАРТ` "
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, messageStart+train)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
 			msg.ParseMode = "markdown"
@@ -61,16 +65,19 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 			store.CheckUser(update.Message.Chat.ID)
 
 		case "Поехали " + TrainFrom:
-			fromID = update.Message.MessageID
+
+			store.WriteFromQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Откуда едешь? "+WinkingFace)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(button)
 
 		case "Куда " + TraintTo:
-			toID = update.Message.MessageID
+
+			store.WriteToQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Куда едешь? "+SmirkingFAce)
 
 		case "Дата" + Date:
-			dateID = update.Message.MessageID
+
+			store.WriteDateQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Когда едешь? (формат ввода `02.02.2018`)"+Date)
 
 		case "Nice":

@@ -29,8 +29,11 @@ CREATE EXTENSION "uuid-ossp";
 
 CREATE TABLE users
 (
-  id       INTEGER      DEFAULT 0,
-  fromFrom VARCHAR(256) DEFAULT '',
-  toTo     VARCHAR(256) DEFAULT '',
-  data     VARCHAR(256) DEFAULT ''
+  id            INTEGER      DEFAULT 0,
+  fromFrom      VARCHAR(256) DEFAULT '',
+  toTo          VARCHAR(256) DEFAULT '',
+  data          VARCHAR(256) DEFAULT '',
+  fromQuestions BOOLEAN      DEFAULT FALSE,
+  toQuestions   BOOLEAN      DEFAULT FALSE,
+  dateQuestions BOOLEAN      DEFAULT FALSE
 );
