@@ -26,6 +26,11 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		toQuestions := store.ToQuestions(update.Message.Chat.ID)
 		dateQuestions := store.DateQuestions(update.Message.Chat.ID)
 
+		if (update.Message.Text == "СТАРТ"){
+			store.WriteFromQuestions(update.Message.Chat.ID, false)
+			store.WriteToQuestions(update.Message.Chat.ID, false)
+			store.WriteDateQuestions(update.Message.Chat.ID, false)
+		}
 		if fromQuestions {
 			store.WriteFromQuestions(update.Message.Chat.ID, false)
 			store.AddFrom(update.Message.Chat.ID, update.Message.Text)
@@ -47,7 +52,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		switch update.Message.Text {
 
 		case "/start":
-			messageStart := "Привет! Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!" + WinkingFace + "\n" +
+			messageStart := "Привет!/n Скорее всего ты мой друг и я скинул тебе бота чтобы потестить!" + WinkingFace + "\n" +
 				"Пока что доступно только три города *Москва Санкт-Петербург* и *Орск*  ахах! \n Это все *ВПЕРЕД ТЕСТИТЬ* \n" +
 				"`Нажми Поехали или СТАРТ` "
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, messageStart+train)
@@ -57,7 +62,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 			store.CheckUser(update.Message.Chat.ID)
 
 		case "СТАРТ":
-			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет, нажми на ПОЕХАЛИ,чтобы начать ? "+train)
+			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Нажми на ПОЕХАЛИ,чтобы начать ? "+train)
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
 
 			store.CheckUser(update.Message.Chat.ID)

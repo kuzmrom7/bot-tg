@@ -56,19 +56,19 @@ func AddData(id int64) (Message string) {
 			trainsss = trainsss + msg
 		}
 
-		message = message + TraintTo + "*" + From + "\t -> " + To + "\t" + Date + "*" + "\n\n" + trainsss + "\n\n"
+		message = message + TraintTo + "*" + From + "\t - " + To + "\t" + Date + "*" + "\n\n" + trainsss + "\n\n"
 	}
-	log.Println("data")
+	log.Println("data all ready")
 	return message
 }
 
 func handleMsgTrain(number, time0, time1, date0, date1, route0, route1, timeInway string) string {
 	var msg string
 
-	str1 := Number + " *" + number + " " + route0 + " -> " + route1 + "* \n"
-	str2 := Clock + " Отпраление " + date0 + " " + time0 + "\n"
-	str3 := Clock + " Прибытие " + date1 + " " + time1 + "\n"
-	str4 := Clock + " В пути " + timeInway + "\n"
+	str1 := Train2 + " *" + number + " " + route0 + " -> " + route1 + "* \n"
+	str2 := Clock + "Отпраление " + date0 + " " + time0 + "\n"
+	str3 := Clock2 + "Прибытие " + date1 + " " + time1 + "\n"
+	str4 := Clock3 + "В пути " + timeInway + "\n"
 	wavy := Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy+Wavy
 
 	msg = str1 + str2 + str3 + str4 + wavy+ "\n\n"
