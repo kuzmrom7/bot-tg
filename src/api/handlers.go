@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 )
 
 var myClient = &http.Client{}
@@ -21,7 +22,7 @@ func getRID(url string, target interface{}) (error) {
 	defer r.Body.Close()
 
 	cooks = r.Cookies()
-	//time.Sleep(1500 * time.Millisecond)
+	time.Sleep(1500 * time.Millisecond)
 	return json.NewDecoder(r.Body).Decode(target)
 }
 

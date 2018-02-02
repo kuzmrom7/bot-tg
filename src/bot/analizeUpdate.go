@@ -13,8 +13,16 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		tgbotapi.KeyboardButton{Text: "СТАРТ "},
 	}
 
-	var button = []tgbotapi.KeyboardButton{
-		tgbotapi.KeyboardButton{Text: "СТАРТ"},
+
+	var buttonDate = []tgbotapi.KeyboardButton{
+		tgbotapi.KeyboardButton{Text: "04.02.2018"},
+	}
+
+
+	var buttonCity = []tgbotapi.KeyboardButton{
+		tgbotapi.KeyboardButton{Text: "Москва"},
+		tgbotapi.KeyboardButton{Text: "Санкт-Петербург"},
+		tgbotapi.KeyboardButton{Text: "Орск"},
 	}
 
 	for update := range telegramBot.Updates {
@@ -26,7 +34,7 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 		toQuestions := store.ToQuestions(update.Message.Chat.ID)
 		dateQuestions := store.DateQuestions(update.Message.Chat.ID)
 
-		if (update.Message.Text == "СТАРТ"){
+		if (update.Message.Text == "СТАРТ") {
 			store.WriteFromQuestions(update.Message.Chat.ID, false)
 			store.WriteToQuestions(update.Message.Chat.ID, false)
 			store.WriteDateQuestions(update.Message.Chat.ID, false)
@@ -71,21 +79,23 @@ func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
 
 			store.WriteFromQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Откуда едешь? "+WinkingFace)
-			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(button)
+			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttonCity)
 
 		case "Куда " + TraintTo:
 
 			store.WriteToQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Куда едешь? "+SmirkingFAce)
+			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttonCity)
 
 		case "Дата" + Date:
 
 			store.WriteDateQuestions(update.Message.Chat.ID, true)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Когда едешь? (формат ввода `02.02.2018`)"+Date)
+			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttonDate)
 
 		case "Nice":
-			msgAPI := AddData(update.Message.Chat.ID)
 
+			msgAPI := AddData(update.Message.Chat.ID)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, msgAPI)
 			msg.ParseMode = "markdown"
 			msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(buttons)
