@@ -1,4 +1,5 @@
-# **TRAINS-BOT**:----------:
+# **TRAINS-BOT**
+:----------:
 
 
 ![Альтернативный текст](/assets/train.png "Trains-bot")
