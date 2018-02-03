@@ -8,32 +8,35 @@ import (
 )
 
 type Codes struct {
-	N string `json:"n"`
-	C int    `json:"c"`
+	Name string `json:"n"`
+	Code int    `json:"c"`
 }
 
 func main() {
-	searchCity()
+	searchCity("МОСКВА")
 }
 
-func searchCity()  {
+func searchCity(city string) {
 	foo1 := new([]Codes)
 
-	city := "ОРСК"
-
-	url := fmt.Sprintf("http://www.rzd.ru/suggester?compactMode=y&stationNamePart=%s&lang=ru",city )
+	url := fmt.Sprintf("http://www.rzd.ru/suggester?compactMode=y&stationNamePart=%s&lang=ru", city)
 	getCode(url, foo1)
 
 	une := []rune(city)
 	val := len(une)
 
-	for _, code := range *foo1{
-		runes := []rune(code.N)
+	foo2 := make([]Codes, 0)
+	for _, code := range *foo1 {
+		runes := []rune(code.Name)
 		safeSubstring := string(runes[0:val])
-		if (safeSubstring == city){
-			log.Println(safeSubstring, code.C , code.N)
+		if (safeSubstring == city) {
+			foo2 = append(foo2, code)
+			log.Println(safeSubstring, code.Code, code.Name)
 		}
 
+	}
+	for _, i := range foo2 {
+		log.Println(" >>>", i.Name)
 	}
 }
 
