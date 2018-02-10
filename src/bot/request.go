@@ -1,8 +1,8 @@
 package bot
 
 import (
-	"github.com/bot-tg/src/store"
-	"github.com/bot-tg/src/api"
+	"github.com/kuzmrom7/bot-tg/src/store"
+	"github.com/kuzmrom7/bot-tg/src/api"
 	"log"
 )
 

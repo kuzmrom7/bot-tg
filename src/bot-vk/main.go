@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"github.com/Dimonchik0036/vk-api"
-	"github.com/bot-tg/src/bot"
+	"github.com/kuzmrom7/bot-tg/src/bot"
 )
 
 func main() {

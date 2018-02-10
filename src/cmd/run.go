@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/bot-tg/src/store"
-	"github.com/bot-tg/src/bot"
+	"github.com/kuzmrom7/bot-tg/src/store"
+	"github.com/kuzmrom7/bot-tg/src/bot"
 )
 
 func main() {

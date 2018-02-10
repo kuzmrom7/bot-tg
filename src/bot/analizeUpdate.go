@@ -3,7 +3,7 @@ package bot
 import (
 	"gopkg.in/telegram-bot-api.v4"
 	"log"
-	"github.com/bot-tg/src/store"
+	"github.com/kuzmrom7/bot-tg/src/store"
 )
 
 func (telegramBot *TelegramBot) analyzeUpdate(update tgbotapi.Update) {
