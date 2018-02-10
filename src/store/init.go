@@ -17,7 +17,7 @@ func New() {
 		DB   = "bot"
 		User = "bot"
 		Pass = "bot"
-		Host = "localhost"
+		Host = "174.138.4.14"
 		Port = 5432
 		SSL  = "disable"
 	)

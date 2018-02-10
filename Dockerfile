@@ -4,11 +4,11 @@ MAINTAINER kuzmrom7
 
 RUN go get -u github.com/kardianos/govendor
 
-WORKDIR /go/src/github.com/kuzmrom7/proxy/cmd/proxy
-ADD . /go/src/github.com/lavrs/proxy
+WORKDIR /go/src/github.com/kuzmrom7/bot-tg/src/cmd
+ADD . /go/src/github.com/kuzmrom7/bot-tg
 
 RUN govendor sync
 
 RUN go build
 
-ENTRYPOINT ["/go/bin/src/cmd"]
+ENTRYPOINT ["/go/src/github.com/kuzmrom7/bot-tg/src/cmd/cmd"]
